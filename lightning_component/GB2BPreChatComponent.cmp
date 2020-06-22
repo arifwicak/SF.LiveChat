@@ -1,0 +1,57 @@
+<aura:component implements="lightningsnapin:prechatUI" controller="GB2BPreChatFormController" access="global">
+    <!-- You must implement "lightningsnapin:prechatUI" for this component to appear in the "Pre-chat Component" customization dropdown in the Embedded Service setup -->
+    <!-- Pre-chat field components to render -->
+    <aura:attribute name="prechatFieldComponents" type="List" description="An array of objects representing the pre-chat fields specified in pre-chat setup."/>
+    
+    <!-- Handler for when this component is initialized -->
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}" />
+
+    <!-- For Aura performance -->
+    <aura:locator target="startButton" description="Pre-chat form submit button."/>
+    <aura:attribute name="fullname" type="String" description="An array of objects representing the pre-chat fields specified in pre-chat setup."/>
+    <aura:attribute name="brandmarket" type="String" description="An array of objects representing the pre-chat fields specified in pre-chat setup."/>
+    <aura:attribute name="memberCode" type="String" description="An array of objects representing the pre-chat fields specified in pre-chat setup."/>
+    <aura:attribute name="status" type="String" description="An array of objects representing the pre-chat fields specified in pre-chat setup."/>
+    <aura:attribute name="memcodeBrandMarket" type="String" description="An array of objects representing the pre-chat fields specified in pre-chat setup."/>
+ 	<aura:attribute name="notlogin" type="boolean" description="An array of objects representing the pre-chat fields specified in pre-chat setup."/>
+    <aura:attribute name="background" type="String" description="An array of objects representing the pre-chat fields specified in pre-chat setup."/>
+    <aura:attribute name="baseUrl" type="String" default=""></aura:attribute>
+    
+    <!-- Contains methods for getting pre-chat fields, starting a chat, and validating fields -->
+    <lightningsnapin:prechatAPI aura:id="prechatAPI"/>
+    
+    <div class="prechatUI">
+        <img src="{!v.baseUrl}"/>
+        <div class="outputText">            
+            <aura:if isTrue="{! v.brandmarket == 'FUN88-CNY' || v.brandmarket == 'FUN88-THB' || v.brandmarket == 'FUN88-VND' || v.brandmarket == 'FUN88-IDR'}"> 
+        		<lightning:formattedText value="{!$Label.c.GB2BTestMsg}"/>
+            </aura:if>
+            <aura:if isTrue="{!v.brandmarket == 'RB88-CNY' || v.brandmarket == 'RB88-THB'}"> 
+        		<lightning:formattedText value="{!$Label.c.GB2BRB88WelcomeMsg}"/>
+            </aura:if>
+            <aura:if isTrue="{!v.brandmarket == 'TLC-CNY' || v.brandmarket == 'TLC-IDR'}"> 
+        		<lightning:formattedText value="{!$Label.c.GB2BTLCWelcomeMsg}"/>
+            </aura:if>
+            <aura:if isTrue="{!v.brandmarket == 'JBO-CNY' || v.brandmarket == 'JBO-VND'}"> 
+        		<lightning:formattedText value="{!$Label.c.GB2BJBOWelcomeMsg}"/>
+            </aura:if>
+            <aura:if isTrue="{!v.brandmarket == 'BW-CNY' || v.brandmarket == 'BW-THB'}"> 
+        		<lightning:formattedText value="{!$Label.c.GB2BBWWelcomeMsg}"/>
+            </aura:if>
+        </div>
+        <div class="prechatContent">
+            <ul class="fieldList">
+                <!-- Look in the controller's onInit function. This component dynamically creates the pre-chat field components -->
+                <aura:if isTrue="{!v.notlogin}">                               
+                	<ui:inputText aura:id="memcode" class ="input" placeholder = "{!$Label.c.GB2BMemberCodeLabel}" labelClass = "inputLabel" label='{!$Label.c.GB2BMemberLabel}' value='{!v.memberCode}'></ui:inputText>
+				</aura:if> 
+            </ul>
+        </div>   
+       
+        <div class="buttonWrapper">
+            <ui:button aura:id="startButton" class="button"  labelClass="buttonLabel" label="{!$Label.LiveAgentPrechat.StartChat}" press="{!c.handleStartButtonClick}" />
+        </div>
+        
+    </div>
+    
+</aura:component>

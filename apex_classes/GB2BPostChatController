@@ -1,0 +1,35 @@
+public without sharing class GB2BPostChatController {
+    
+    public String chatkey {get;set;}
+    public String survey {get;set;}
+    public String errormessage {get;set;}
+    public String url {get;set;}
+    public String market {get;set;}
+    
+    public GB2BPostChatController() {
+        chatkey = ApexPages.currentPage().getParameters().get('chatKey');   
+        List<LiveChatTranscript> transcript = [Select Id, ChatKey, Chat_Survey__c, Brand_Market__c, LiveChatButton.DeveloperName from LiveChatTranscript where ChatKey = :chatkey];
+        market = transcript[0].Brand_Market__c;     
+    }
+    
+    public PageReference save(){
+        try{
+            List<LiveChatTranscript> lct = [Select Id, ChatKey, Chat_Survey__c, Brand_Market__c, LiveChatButton.DeveloperName from LiveChatTranscript where ChatKey = :chatkey];
+            lct[0].Chat_Survey__c = survey;
+            update lct;
+            String brandMarket = lct[0].Brand_Market__c;            
+            String developerName = lct[0].LiveChatButton.DeveloperName;
+            if(developerName.toLowerCase().contains('fun88en')){
+                brandMarket = 'Fun88-ENG';
+            }
+            List<Post_Chat_Feedback_Redirect__mdt> redirectLinkList = [Select Brand_Market__c, Language__c, Redirect_Link__c from Post_Chat_Feedback_Redirect__mdt where Brand_Market__c = :brandMarket];
+            url = redirectLinkList[0].Redirect_Link__c;
+            PageReference page = new PageReference(url);
+            page.setRedirect(true);
+            return page;
+        } catch(Exception ex){
+            errormessage = chatkey + ' ' + ex.getMessage();
+        }
+        return null;
+    }    
+}

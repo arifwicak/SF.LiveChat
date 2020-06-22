@@ -1,0 +1,48 @@
+<apex:page controller="GB2BPostChatController" showHeader="false" sidebar="false">
+    <head>
+        <meta charset="utf-8"/>        
+    </head>
+    <div class="one">
+        <style>
+            .header {
+                margin: auto;
+                width: 100%;
+                height: 100%;
+                border-radius: 100px;
+                border: 2px solod red;
+                text-align: center;
+                font-size: medium;
+                font-family: sans-serif; 
+            }
+            
+            .textarea {
+                font-family: sans-serif !important;
+                font-size: 100% !important;
+                width: 95% !important;
+                height: 90px !important;
+                position: relative !important;
+            }
+            
+            .input {
+                color: white !important;
+                background: #005290 !important;
+                width: 97% !important;
+                font-family: sans-serif !important;
+                font-size: medium !important;
+                border-radius: 4px !important;
+                margin: auto !important;
+                height: 44px !important;
+            }
+
+            
+        </style>    
+        <apex:form >
+            <p><apex:outputText styleClass="header" value="{!$Label.GB2BPostChatLabel}" rendered="{!market != 'BW-CNY' && market != 'BW-THB'}"/></p>
+            <p><apex:outputText styleClass="header" value="{!$Label.GB2BBWPostChatLabel}" rendered="{!market == 'BW-CNY' || market == 'BW-THB'}"/></p>
+            <p><apex:outputText styleClass="header" value="Test Display something"/></p>      
+            <p><apex:inputTextarea id="survey" value="{!survey}" styleClass="textarea"/></p>                           
+            <p><apex:commandButton value="{!$Label.GB2BSubmit}" action="{!save}" styleClass="input"/></p>
+            <apex:outputText value="{!errormessage}" /><br />
+        </apex:form>
+    </div>
+</apex:page>
