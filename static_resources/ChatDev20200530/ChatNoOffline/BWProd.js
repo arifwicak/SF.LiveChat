@@ -9,7 +9,7 @@ function makeinitESW(){
         var offlineAgent = '';
         var disableAgent = '';
         var loading = '';
-
+        // Test adding comment 1
         if(brandmarket == 'BW-CNY' ){
             
             agentName = 'BWCNYChat';
