@@ -9,7 +9,7 @@ function makeinitESW(){
         var offlineAgent = '';
         var disableAgent = '';
         var loading = '';
-
+        // Testing comment revision 2
         if(brandmarket == 'JBO-CNY' ){
             agentName = 'JBOCNYChat';
             buttonID = '5732v000000ceev';
